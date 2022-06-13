@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components/macro";
 
+import { QUERIES } from "../../constants";
 import { MAIN_STORY, OPINION_STORIES, SECONDARY_STORIES } from "../../data";
 
 import SectionTitle from "../SectionTitle";
@@ -28,13 +29,13 @@ const MainStoryGrid = () => {
 
       <OpinionSection>
         <SectionTitle>Opinion</SectionTitle>
-        <StoryList>
+        <OpinionStoryList>
           {OPINION_STORIES.map((story, index) => (
             <VerticalStoryWrapper key={story.id}>
               <OpinionStory key={story.id} {...story} />
             </VerticalStoryWrapper>
           ))}
-        </StoryList>
+        </OpinionStoryList>
       </OpinionSection>
 
       <AdvertisementSection>
@@ -64,8 +65,14 @@ const SecondaryStorySection = styled.section`
 `;
 
 const StoryList = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+`;
+
+const OpinionStoryList = styled(StoryList)`
+  @media ${QUERIES.tabletOnly} {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
 `;
 
 const OpinionSection = styled.section`
@@ -81,6 +88,14 @@ const VerticalStoryWrapper = styled.div`
     border-bottom: 1px solid var(--color-gray-300);
     padding-bottom: 16px;
     margin-bottom: 16px;
+  }
+
+  @media ${QUERIES.tabletOnly} {
+    &:not(:last-of-type) {
+      border: none;
+      padding-bottom: revert;
+      margin-bottom: revert;
+    }
   }
 `;
 
